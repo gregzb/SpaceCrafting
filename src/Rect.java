@@ -1,5 +1,8 @@
 import processing.core.PVector;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Rect {
     private PVector topLeft;
     private PVector botRight;
@@ -52,6 +55,28 @@ public class Rect {
         PVector p2 = r.botRight;
 
         return collides(new Rect(p1, p1), true) && collides(new Rect(p2, p2), true);
+    }
+
+    public int getIntersectPoints(Rect r) {
+        return getIntersectPoints(r, true).size();
+    }
+
+    public Set<PVector> getIntersectPoints(Rect r, boolean first) {
+        Set<PVector> iPoints = new HashSet<>();
+        PVector[] points = new PVector[] {
+                r.topLeft, new PVector(r.topLeft.x, r.botRight.y), r.botRight, new PVector(r.botRight.x, r.topLeft.y)
+        };
+        for (PVector p : points) {
+            //count += collidesIncludes(new Rect(p, p)) ? 1 : 0;
+            if (collides(new Rect(p, p), true)) {
+                iPoints.add(p);
+            }
+        }
+        if (first) {
+            iPoints.addAll(r.getIntersectPoints(this, false));
+            //println(iPoints);
+        }
+        return iPoints;
     }
 
     public String toString() {

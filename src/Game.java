@@ -41,5 +41,7 @@ public class Game {
         }
         sceneManager.getActiveScene().update(secsRunning, dt);
         sceneManager.lateUpdate();
+        KeyboardInput.getInstance().lateUpdate();
+        mouse.lateUpdate(secsRunning, dt);
     }
 }

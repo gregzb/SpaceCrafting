@@ -22,6 +22,7 @@ public class Main extends PApplet{
         instance = this;
 
         Game.getInstance();
+        KeyboardInput.getInstance();
         noStroke();
     }
 
@@ -36,5 +37,21 @@ public class Main extends PApplet{
 
     public static void main(String[] args) {
         PApplet.main(Main.class);
+    }
+
+    public void keyPressed() {
+        if (key == CODED) {
+            KeyboardInput.getInstance().addKey(keyCode);
+        } else {
+            KeyboardInput.getInstance().addKey(key);
+        }
+    }
+
+    public void keyReleased() {
+        if (key == CODED) {
+            KeyboardInput.getInstance().removeKey(keyCode);
+        } else {
+            KeyboardInput.getInstance().removeKey(key);
+        }
     }
 }

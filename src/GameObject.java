@@ -12,6 +12,10 @@ public abstract class GameObject {
 
     public final PApplet a;
 
+    public GameObject(GameObject gObj) {
+        this(gObj.getPosition(), gObj.getVelocity(), gObj.getMaxVelocity(), gObj.getAcceleration(), gObj.getRawHitbox());
+    }
+
     public GameObject(PVector position, Polygon hitbox) {
         this(position, new PVector(0, 0), new PVector(Float.MAX_VALUE-1, Float.MAX_VALUE-1), new PVector(0, 0), hitbox);
     }
@@ -26,6 +30,11 @@ public abstract class GameObject {
         a = Main.pApplet();
 
         this.bounds = this.hitbox.getBounds();
+    }
+
+    public void rotateCounterClockwise() {
+        hitbox.rotateCounterClockwise();
+        bounds = hitbox.getBounds();
     }
 
     public abstract void update(float secsPassed, float dt);

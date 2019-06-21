@@ -19,6 +19,17 @@ public abstract class Component extends GameObject {
         return pixelsPerCell;
     }
 
+    public abstract Component copy();
+
+    public Component(Component component) {
+        super(component);
+        this.ship = component.getShip(); //WATCH OUT !!!!!!!!!!!!!!!!!
+        this.baseHealth = component.baseHealth;
+        this.health = component.health;
+        this.baseCoolDown = component.baseCoolDown;
+        this.coolDown = component.coolDown;
+    }
+
     public Component(PVector position, Polygon hitbox, Ship ship, float health, float coolDown) {
         super(position, scalePolygon(hitbox, pixelsPerCell));
         this.ship = ship;

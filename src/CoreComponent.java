@@ -6,6 +6,10 @@ public class CoreComponent extends Component{
         super(position, new Polygon(new PVector(0, 0), new PVector(0, 2), new PVector(2, 2), new PVector(2, 0)), ship, health, coolDown);
     }
 
+    public CoreComponent(CoreComponent component) {
+        super(component);
+    }
+
     @Override
     public void update(float secsPassed, float dt) {
 
@@ -16,6 +20,11 @@ public class CoreComponent extends Component{
         Rect bounds = getAbsoluteBounds();
         a.fill(127, 127, 127);
         //a.println(bounds.width() * getPixelsPerCell());
-        a.rect(bounds.x(), bounds.y(), bounds.width(), bounds.height(), 5);
+        a.rect(bounds.x(), bounds.y(), bounds.width(), bounds.height(), 8);
+    }
+
+    @Override
+    public Component copy() {
+        return new CoreComponent(this);
     }
 }

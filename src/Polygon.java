@@ -3,6 +3,7 @@ import processing.core.PShape;
 import processing.core.PVector;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Polygon {
     private PVector[] points;
@@ -138,6 +139,17 @@ public class Polygon {
 
     public void setFill(int c) {
         myShape.setFill(c);
+    }
+
+    public void rotateCounterClockwise() {
+        for (int i = 0; i < points.length; i++) {
+            PVector point = points[i];
+            points[i] = new PVector(point.y, -point.x);
+        }
+        Rect newBounds = getBounds();
+        for (int i = 0; i < points.length; i++) {
+            points[i].add(-newBounds.x(), -newBounds.y());
+        }
     }
 
     public String toString() {

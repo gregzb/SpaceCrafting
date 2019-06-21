@@ -57,16 +57,29 @@ public class EditorScene extends Scene {
 
             boolean inBounds = g.getAbsoluteBounds().contains(currentChoice.getAbsoluteBounds());
             boolean notIntersecting = true;
+            boolean tangent = false;
 
             for (Component component : g.getComponents()) {
                 if (component.getAbsoluteBounds().collides(currentChoice.getAbsoluteBounds(), false)) {
                     notIntersecting = false;
                 }
+                int intersectingPoints = component.getAbsoluteBounds().getIntersectPoints(currentChoice.getAbsoluteBounds());
+                if (intersectingPoints >= 2) {
+                    tangent = true;
+                }
             }
 
             if (notIntersecting && inBounds) {
                 currentChoice.display(secs, dt);
+                if (KeyboardInput.getInstance().keyFirstDown('r') || KeyboardInput.getInstance().keyFirstDown('R')) {
+                    currentChoice.rotateCounterClockwise();
+                }
+                if (Game.getInstance().getMouse().firstPressed() && tangent) {
+                    g.addComponent(currentChoice.copy());
+                    currentChoice = null;
+                }
             }
+            //a.println(g.getComponents().size());
         }
     }
 
