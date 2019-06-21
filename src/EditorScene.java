@@ -20,6 +20,8 @@ public class EditorScene extends Scene {
         g = new Grid(new PVector(a.width/2f - (trueSize)/2f, a.height/2f - (trueSize)/2f), new PVector(trueSize, trueSize), pixelsPerCell);
         Component.setPixelsPerCell(pixelsPerCell);
 
+        g.addComponent(new CoreComponent(g.gridToScreen(new PVector(7, 7)), null, 100, 0));
+
         float bWidth = 150;
         float bHeight = 80;
 
@@ -48,8 +50,23 @@ public class EditorScene extends Scene {
         a.text(text, a.width - 100, 30);
 
         if (currentChoice != null) {
-            currentChoice.setPosition(Game.getInstance().getMouse().getAbsolutePosition());
-            currentChoice.display(secs, dt);
+            PVector mousePos = Game.getInstance().getMouse().getAbsolutePosition();
+            PVector mouseOnGrid = g.screenToGrid(mousePos);
+            PVector mouseOnScreen = g.gridToScreen(new PVector((float)Math.floor(mouseOnGrid.x), (float)Math.floor(mouseOnGrid.y)));
+            currentChoice.setPosition(mouseOnScreen);
+
+            boolean inBounds = g.getAbsoluteBounds().contains(currentChoice.getAbsoluteBounds());
+            boolean notIntersecting = true;
+
+            for (Component component : g.getComponents()) {
+                if (component.getAbsoluteBounds().collides(currentChoice.getAbsoluteBounds(), false)) {
+                    notIntersecting = false;
+                }
+            }
+
+            if (notIntersecting && inBounds) {
+                currentChoice.display(secs, dt);
+            }
         }
     }
 

@@ -41,7 +41,7 @@ public abstract class GameObject {
     }
 
     public Polygon getAbsoluteHitbox() {
-        return new Polygon(hitbox, getAbsolutePosition());
+        return new Polygon(hitbox, 1, getAbsolutePosition());
     }
 
     public PVector getAbsolutePosition() {

@@ -14,6 +14,6 @@ public class LaserComponent extends Component{
     public void display(float secsPassed, float dt) {
         Rect bounds = getAbsoluteBounds();
         a.fill(240, 20, 20);
-        a.rect(bounds.x(), bounds.y(), bounds.width() * getPixelsPerCell(), bounds.height() * getPixelsPerCell(), 5);
+        a.rect(bounds.x(), bounds.y(), bounds.width(), bounds.height(), 5);
     }
 }

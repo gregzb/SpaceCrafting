@@ -30,12 +30,12 @@ public class Polygon {
         this(p.points);
     }
 
-    public Polygon(Polygon p, PVector position) {
+    public Polygon(Polygon p, float scaleFactor, PVector position) {
 
         this.points = new PVector[p.points.length];
         for (int i = 0; i < points.length; i++) {
             PVector oldVec = p.points[i];
-            this.points[i] = new PVector(oldVec.x + position.x, oldVec.y + position.y);
+            this.points[i] = new PVector(scaleFactor * oldVec.x + position.x, scaleFactor * oldVec.y + position.y);
         }
     }
 

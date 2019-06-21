@@ -76,4 +76,38 @@ public class Grid extends GameObject{
     public GameObject getParent() {
         return null;
     }
+
+    public PVector screenToGrid(PVector screen) {
+        float x = screen.x;
+        float y = screen.y;
+
+        Rect bounds = getAbsoluteBounds();
+
+        x -= bounds.x();
+        y -= bounds.y();
+
+        x /= pixelsPerCell;
+        y /= pixelsPerCell;
+
+        return new PVector(x, y);
+    }
+
+    public PVector gridToScreen(PVector grid) {
+        float x = grid.x;
+        float y = grid.y;
+
+        Rect bounds = getAbsoluteBounds();
+
+        x *= pixelsPerCell;
+        y *= pixelsPerCell;
+
+        x += bounds.x();
+        y += bounds.y();
+
+        return new PVector(x, y);
+    }
+
+    public List<Component> getComponents() {
+        return components;
+    }
 }

@@ -36,18 +36,22 @@ public class Rect {
         return botRight.y - topLeft.y;
     }
 
-    public boolean collides(Rect r) {
+    public boolean collides(Rect r, boolean inclusive) {
         Rect r1 = this;
         Rect r2 = r;
 
-        return r1.x() < r2.x() + r2.width() && r1.x() + r1.width() > r2.x() && r1.y() < r2.y() + r2.height() && r1.y() + r1.height() > r2.y();
+        if (inclusive) {
+            return r1.x() <= r2.x() + r2.width() && r1.x() + r1.width() >= r2.x() && r1.y() <= r2.y() + r2.height() && r1.y() + r1.height() >= r2.y();
+        } else {
+            return r1.x() < r2.x() + r2.width() && r1.x() + r1.width() > r2.x() && r1.y() < r2.y() + r2.height() && r1.y() + r1.height() > r2.y();
+        }
     }
 
     public boolean contains(Rect r) {
         PVector p1 = r.topLeft;
         PVector p2 = r.botRight;
 
-        return collides(new Rect(p1, p1)) && collides(new Rect(p2, p2));
+        return collides(new Rect(p1, p1), true) && collides(new Rect(p2, p2), true);
     }
 
     public String toString() {

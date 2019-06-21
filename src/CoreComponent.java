@@ -16,6 +16,6 @@ public class CoreComponent extends Component{
         Rect bounds = getAbsoluteBounds();
         a.fill(127, 127, 127);
         //a.println(bounds.width() * getPixelsPerCell());
-        a.rect(bounds.x(), bounds.y(), bounds.width() * getPixelsPerCell(), bounds.height() * getPixelsPerCell(), 5);
+        a.rect(bounds.x(), bounds.y(), bounds.width(), bounds.height(), 5);
     }
 }

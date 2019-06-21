@@ -20,7 +20,7 @@ public abstract class Component extends GameObject {
     }
 
     public Component(PVector position, Polygon hitbox, Ship ship, float health, float coolDown) {
-        super(position, hitbox);
+        super(position, scalePolygon(hitbox, pixelsPerCell));
         this.ship = ship;
         this.baseHealth = this.health = health;
         this.baseCoolDown = this.coolDown = coolDown;
@@ -56,5 +56,9 @@ public abstract class Component extends GameObject {
 
     public GameObject getParent() {
         return ship;
+    }
+
+    public static Polygon scalePolygon(Polygon p, float scaleFactor) {
+        return new Polygon(p, scaleFactor, new PVector(0, 0));
     }
 }
