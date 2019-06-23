@@ -7,7 +7,7 @@ public abstract class Component extends GameObject {
     private final float coolDown;
     private final float baseCoolDown;
 
-    private final Ship ship;
+    private Ship ship;
 
     private static float pixelsPerCell;
 
@@ -65,11 +65,25 @@ public abstract class Component extends GameObject {
         return ship;
     }
 
+    public void setShip(Ship ship) {
+        this.ship = ship;
+    }
+
     public GameObject getParent() {
         return ship;
     }
 
     public static Polygon scalePolygon(Polygon p, float scaleFactor) {
         return new Polygon(p, scaleFactor, new PVector(0, 0));
+    }
+
+    public void displayHealth() {
+        a.fill(220, 20, 20);
+        a.rect(getAbsoluteBounds().x() + 2, getAbsoluteBounds().y() + 2, 16, 8, 0);
+
+        float percentHealth = health / baseHealth;
+
+        a.fill(20, 220, 20);
+        a.rect(getAbsoluteBounds().x() + 2, getAbsoluteBounds().y() + 2, 16 * percentHealth, 8, 0);
     }
 }

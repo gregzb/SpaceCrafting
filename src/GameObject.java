@@ -25,11 +25,12 @@ public abstract class GameObject {
         this.setVelocity(velocity.copy());
         this.setMaxVelocity(maxVelocity.copy());
         this.setAcceleration(acceleration.copy());
-        this.setRawHitbox(new Polygon(hitbox));
+        if (hitbox != null) {
+            this.setRawHitbox(new Polygon(hitbox));
+            this.bounds = this.hitbox.getBounds();
+        }
 
         a = Main.pApplet();
-
-        this.bounds = this.hitbox.getBounds();
     }
 
     public void rotateCounterClockwise() {

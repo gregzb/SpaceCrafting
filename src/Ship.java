@@ -1,5 +1,6 @@
 import processing.core.PVector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Ship extends GameObject {
@@ -10,6 +11,17 @@ public class Ship extends GameObject {
 
     public Ship(PVector position) {
         super(position, null);
+        fuel = 1;
+        components = new ArrayList<>();
+    }
+
+    public Ship(Ship ship) {
+        super(ship.getPosition(), ship.getVelocity(), ship.getMaxVelocity(), ship.getAcceleration(), null);
+        fuel = ship.fuel;
+        components = new ArrayList<>();
+        for (Component component : ship.getComponents()) {
+            components.add(component.copy());
+        }
     }
 
     @Override

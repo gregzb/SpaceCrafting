@@ -1,3 +1,7 @@
+import processing.core.PFont;
+
+import javax.print.attribute.standard.PrinterMessageFromOperator;
+
 public class GlobalData {
 
     private static GlobalData instance;
@@ -8,5 +12,8 @@ public class GlobalData {
         }
         return instance;
     }
+
+    public Ship ship1;
+    public Ship ship2;
 
 }

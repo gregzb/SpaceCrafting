@@ -19,6 +19,8 @@ public class LaserComponent extends Component{
         Rect bounds = getAbsoluteBounds();
         a.fill(240, 20, 20);
         a.rect(bounds.x(), bounds.y(), bounds.width(), bounds.height(), 20);
+        //a.println(getHealth() + ", " + getBaseHealth());
+        displayHealth();
     }
 
     @Override

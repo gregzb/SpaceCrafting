@@ -25,10 +25,11 @@ public class EditorScene extends Scene {
         float bWidth = 150;
         float bHeight = 80;
 
-        buttons = new Button[3];
+        buttons = new Button[4];
         buttons[0] = new Button(new PVector(10, 10), new Polygon(new PVector(0, 0), new PVector(0, bHeight), new PVector(bWidth, bHeight), new PVector(bWidth, 0)), null, a.color(240, 240, 240), "Laser", 40, "laser");
         buttons[1] = new Button(new PVector(10 + 170, 10), new Polygon(new PVector(0, 0), new PVector(0, bHeight), new PVector(bWidth, bHeight), new PVector(bWidth, 0)), null, a.color(240, 240, 240), "Shield", 40, "shield");
         buttons[2] = new Button(new PVector(10 + 340, 10), new Polygon(new PVector(0, 0), new PVector(0, bHeight), new PVector(bWidth, bHeight), new PVector(bWidth, 0)), null, a.color(240, 240, 240), "Crew", 40, "crew");
+        buttons[3] = new Button(new PVector(a.width - 260, a.height - 110), new Polygon(new PVector(0, 0), new PVector(0, 100), new PVector(250, 100), new PVector(250, 0)), null, a.color(240, 240, 240), "Confirm", 55, "confirm");
     }
 
     @Override
@@ -47,9 +48,15 @@ public class EditorScene extends Scene {
             b.display(secs, dt);
         }
 
-        a.text(text, a.width - 100, 30);
+        a.textSize(30);
+        a.text(text, a.width - 100, 50);
 
         if (currentChoice != null) {
+
+            if (KeyboardInput.getInstance().keyFirstDown('r') || KeyboardInput.getInstance().keyFirstDown('R')) {
+                currentChoice.rotateCounterClockwise();
+            }
+
             PVector mousePos = Game.getInstance().getMouse().getAbsolutePosition();
             PVector mouseOnGrid = g.screenToGrid(mousePos);
             PVector mouseOnScreen = g.gridToScreen(new PVector((float)Math.floor(mouseOnGrid.x), (float)Math.floor(mouseOnGrid.y)));
@@ -71,9 +78,6 @@ public class EditorScene extends Scene {
 
             if (notIntersecting && inBounds) {
                 currentChoice.display(secs, dt);
-                if (KeyboardInput.getInstance().keyFirstDown('r') || KeyboardInput.getInstance().keyFirstDown('R')) {
-                    currentChoice.rotateCounterClockwise();
-                }
                 if (Game.getInstance().getMouse().firstPressed() && tangent) {
                     g.addComponent(currentChoice.copy());
                     currentChoice = null;
@@ -86,7 +90,19 @@ public class EditorScene extends Scene {
     public void buttonPressedOnce(String id) {
         text = id;
         if (text.equals("laser")) {
-            currentChoice = new LaserComponent(new PVector(0, 0), null, 0, 0);
+            currentChoice = new LaserComponent(new PVector(0, 0), null, 1, 1);
+        } else if (text.equals("shield")) {
+            currentChoice = new ShieldComponent(new PVector(0, 0), null, 1, 1);
+        } else if (text.equals("crew")) {
+            currentChoice = new CrewComponent(new PVector(0, 0), null, 1, 1);
+        } else if (text.equals("confirm")) {
+            Ship ship = new Ship(new PVector(0, 0));
+            for (Component component : g.getComponents()) {
+                ship.addComponent(component.copy());
+            }
+            g.getComponents().clear();
+            GlobalData.getInstance().ship1 = new Ship(ship);
+            currentChoice = null;
         } else {
             currentChoice = null;
         }
